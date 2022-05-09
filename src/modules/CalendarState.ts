@@ -57,8 +57,16 @@ export default class CalendarState {
       .map((_, index) => index + startOfYears)
   }
 
-  get title () {
+  get dateViewTitle () {
     return this.date.format('MMM YYYY')
+  }
+
+  get monthViewTitle () {
+    return this.date.format('MMM')
+  }
+
+  get yearViewTitle () {
+    return `${this.years.at(1)}-${this.years.at(-2)}`
   }
 
   get nextMonth () {
