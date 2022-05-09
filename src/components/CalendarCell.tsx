@@ -20,8 +20,8 @@ export default function CalendarCell (
         if (!disabled) onClick?.()
       }}
       className={clsx(
-        'flex justify-center items-center rounded-full',
-        large ? 'w-10 h-10' : 'w-6 h-6',
+        'flex justify-center items-center rounded-full text-sm',
+        large ? 'w-12 h-12' : 'w-8 h-8',
         {
           'text-white bg-red-500': active && !disabled,
           'text-red-500': today && !disabled && !active,

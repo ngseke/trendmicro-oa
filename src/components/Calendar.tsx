@@ -72,7 +72,7 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
             <CalendarWeekRow />
             {
               dateView.matrix.map((row, key) => (
-                <div className="flex mb-2" key={key}>
+                <div className="flex mb-1" key={key}>
                   {
                     row.map((cell, key) => (
                       <div
