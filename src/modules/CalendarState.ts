@@ -70,11 +70,11 @@ export default class CalendarState {
   }
 
   get nextMonth () {
-    return this.date.add(1, 'month')
+    return new CalendarState(this.date.add(1, 'month'))
   }
 
   get previousMonth () {
-    return this.date.add(-1, 'month')
+    return new CalendarState(this.date.add(-1, 'month'))
   }
 
   static months = dayjs.monthsShort()
