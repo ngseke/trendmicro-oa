@@ -66,82 +66,85 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
         {title}
       </CalendarNavbar>
 
-      <div className="flex flex-col items-stretch">
-        <CalendarWeekRow />
-        {
-          view === 'date' &&
-            dateView.matrix.map((row, key) => (
-              <div className="flex mb-2" key={key}>
-                {
-                  row.map((cell, key) => (
-                    <div
-                      className="flex flex-1 justify-center items-center"
-                      key={key}
-                    >
-                      <CalendarCell
-                        onClick={() => onSelect?.(cell.toDate())}
-                        disabled={!dateView.checkIsSameMonth(cell)}
-                        active={cell.isSame(date, 'date')}
-                        today={cell.isSame(today, 'date')}
+      {
+        view === 'date' && (
+          <div className="flex flex-col items-stretch">
+            <CalendarWeekRow />
+            {
+              dateView.matrix.map((row, key) => (
+                <div className="flex mb-2" key={key}>
+                  {
+                    row.map((cell, key) => (
+                      <div
+                        className="flex flex-1 justify-center items-center"
+                        key={key}
                       >
-                        {cell.get('date')}
-                      </CalendarCell>
-                    </div>
-                  ))
-                }
-              </div>
-            ))
-        }
+                        <CalendarCell
+                          onClick={() => onSelect?.(cell.toDate())}
+                          disabled={!dateView.checkIsSameMonth(cell)}
+                          active={cell.isSame(date, 'date')}
+                          today={cell.isSame(today, 'date')}
+                        >
+                          {cell.get('date')}
+                        </CalendarCell>
+                      </div>
+                    ))
+                  }
+                </div>
+              ))
+            }
+          </div>
+        )
+      }
 
-        {
-          view === 'month' &&
-            <CalendarYearMonthGrid
-              list={monthView.list.map((month, key) => (
-                <CalendarCell
-                  key={key}
-                  onClick={() => {
-                    const newDate = dayjs(date).month(month.get('month'))
-                    onSelect?.(newDate.toDate())
-                    setView('date')
-                    setDateView(
-                      dateView
-                        .setYear(newDate.year())
-                        .setMonth(newDate.month())
-                    )
-                  }}
-                  active={month.isSame(date, 'month')}
-                  today={month.isSame(today, 'month')}
-                  large
-                >
-                  {month.format('MMM')}
-                </CalendarCell>
-              ))}
-            />
-        }
+      {
+        view === 'month' &&
+          <CalendarYearMonthGrid
+            list={monthView.list.map((month, key) => (
+              <CalendarCell
+                key={key}
+                onClick={() => {
+                  const newDate = dayjs(date).month(month.get('month'))
+                  onSelect?.(newDate.toDate())
+                  setView('date')
+                  setDateView(
+                    dateView
+                      .setYear(newDate.year())
+                      .setMonth(newDate.month())
+                  )
+                }}
+                active={month.isSame(date, 'month')}
+                today={month.isSame(today, 'month')}
+                large
+              >
+                {month.format('MMM')}
+              </CalendarCell>
+            ))}
+          />
+      }
 
-        {
-          view === 'year' &&
-            <CalendarYearMonthGrid
-              list={yearView.list.map((year, key) => (
-                <CalendarCell
-                  key={key}
-                  onClick={() => {
-                    const newDate = dayjs(date).year(year.get('year'))
-                    onSelect?.(newDate.toDate())
-                    setView('month')
-                    setMonthView(monthView.setYear(newDate.year()))
-                  }}
-                  active={year.isSame(date, 'year')}
-                  today={year.isSame(today, 'year')}
-                  disabled={[0, 11].includes(key)}
-                  large
-                >
-                  {year.format('YYYY')}
-                </CalendarCell>
-              ))}
-            />
-        }
-      </div>
+      {
+        view === 'year' &&
+          <CalendarYearMonthGrid
+            list={yearView.list.map((year, key) => (
+              <CalendarCell
+                key={key}
+                onClick={() => {
+                  const newDate = dayjs(date).year(year.get('year'))
+                  onSelect?.(newDate.toDate())
+                  setView('month')
+                  setMonthView(monthView.setYear(newDate.year()))
+                }}
+                active={year.isSame(date, 'year')}
+                today={year.isSame(today, 'year')}
+                disabled={[0, 11].includes(key)}
+                large
+              >
+                {year.format('YYYY')}
+              </CalendarCell>
+            ))}
+          />
+      }
     </div>
   )
 }
