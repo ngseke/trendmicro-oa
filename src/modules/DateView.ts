@@ -1,4 +1,7 @@
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
+import localeData from 'dayjs/plugin/localeData'
+
+dayjs.extend(localeData)
 
 /** Immutable 的日期選擇器狀態 */
 export default class DateView {
@@ -52,4 +55,6 @@ export default class DateView {
   get previous () {
     return new DateView(this.date.add(-1, 'month'))
   }
+
+  static weeks = dayjs.weekdaysMin()
 }

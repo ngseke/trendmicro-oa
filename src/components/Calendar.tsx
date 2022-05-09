@@ -65,6 +65,17 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
       </CalendarNavbar>
 
       <div className="flex flex-col items-stretch">
+        <div className="flex mb-2">
+          {DateView.weeks.map(week => (
+            <div
+              className="flex flex-1 justify-center items-center font-bold"
+              key={week}
+            >
+              {week}
+            </div>
+          ))}
+        </div>
+
         {
           view === 'date' &&
             dateView.matrix.map((row, key) => (
