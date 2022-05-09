@@ -1,9 +1,4 @@
 import dayjs, { ConfigType, Dayjs } from 'dayjs'
-import objectSupport from 'dayjs/plugin/objectSupport'
-import localeData from 'dayjs/plugin/localeData'
-
-dayjs.extend(objectSupport)
-dayjs.extend(localeData)
 
 /** Immutable 的日期選擇器狀態 */
 export default class DateView {
@@ -13,19 +8,14 @@ export default class DateView {
     this.date = dayjs(date).startOf('month')
   }
 
-  /** 設定新的年份並回傳新的 CalendarState 實體 */
+  /** 設定新的年份並回傳新的 DateView 實體 */
   setYear (year: number) {
-    return new DateView(this.date.set({ year }))
+    return new DateView(this.date.year(year))
   }
 
-  /** 設定新的月份並回傳新的 CalendarState 實體 */
+  /** 設定新的月份並回傳新的 DateView 實體 */
   setMonth (month: number) {
-    return new DateView(this.date.set({ month }))
-  }
-
-  /** 檢查傳入的參數是否與目前月曆同年份 */
-  checkIsSameYear (date?: ConfigType) {
-    return this.date.isSame(date, 'year')
+    return new DateView(this.date.month(month))
   }
 
   /** 檢查傳入的參數是否與目前月曆同月份 */
@@ -51,31 +41,15 @@ export default class DateView {
     return matrix
   }
 
-  get years () {
-    const startOfYears = Math.floor(this.date.get('year') / 10) * 10 - 1
-    return Array.from({ length: 12 })
-      .map((_, index) => index + startOfYears)
-  }
-
-  get dateViewTitle () {
+  get title () {
     return this.date.format('MMM YYYY')
   }
 
-  get monthViewTitle () {
-    return this.date.format('MMM')
-  }
-
-  get yearViewTitle () {
-    return `${this.years.at(1)}-${this.years.at(-2)}`
-  }
-
-  get nextMonth () {
+  get next () {
     return new DateView(this.date.add(1, 'month'))
   }
 
-  get previousMonth () {
+  get previous () {
     return new DateView(this.date.add(-1, 'month'))
   }
-
-  static months = dayjs.monthsShort()
 }

@@ -23,17 +23,17 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
 
   const title = useMemo(() => {
     return {
-      date: dateView.dateViewTitle,
+      date: dateView.title,
       month: monthView.title,
       year: yearView.title,
     }[view]
-  }, [dateView.dateViewTitle, monthView.title, view, yearView.title])
+  }, [dateView.title, monthView.title, view, yearView.title])
 
   const handleClickPrevious = () => {
     if (view === 'date') {
-      setDateView(dateView.previousMonth)
+      setDateView(dateView.previous)
     } else if (view === 'month') {
-      setMonthView(monthView.previousYear)
+      setMonthView(monthView.previous)
     } else {
       setYearView(yearView.previous)
     }
@@ -41,9 +41,9 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
 
   const handleClickNext = () => {
     if (view === 'date') {
-      setDateView(dateView.nextMonth)
+      setDateView(dateView.next)
     } else if (view === 'month') {
-      setMonthView(monthView.nextYear)
+      setMonthView(monthView.next)
     } else {
       setYearView(yearView.next)
     }

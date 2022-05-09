@@ -10,7 +10,7 @@ export default class MonthView {
 
   /** 設定新的年份並回傳新的 MonthView 實體 */
   setYear (year: number) {
-    return new MonthView(this.date.set({ year }))
+    return new MonthView(this.date.year(year))
   }
 
   get list () {
@@ -22,11 +22,11 @@ export default class MonthView {
     return this.date.format('YYYY')
   }
 
-  get nextYear () {
+  get next () {
     return new MonthView(this.date.add(1, 'year'))
   }
 
-  get previousYear () {
+  get previous () {
     return new MonthView(this.date.add(-1, 'year'))
   }
 }
