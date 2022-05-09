@@ -37,9 +37,15 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
     }
   }
 
+  const handleClickTitle = () => {
+    if (view === 'date') setView('month')
+    else if (view === 'month') setView('year')
+  }
+
   return (
     <div className="p-1 border-[1px] border-gray-500 w-[250px]">
       <CalendarNavbar
+        onClick={handleClickTitle}
         onClickPrevious={handleClickPrevious}
         onClickNext={handleClickNext}
       >
