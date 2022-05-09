@@ -16,7 +16,9 @@ export default function CalendarCell (
   return (
     <button
       type="button"
-      onClick={onClick}
+      onClick={() => {
+        if (!disabled) onClick?.()
+      }}
       className={clsx(
         'flex justify-center items-center rounded-full',
         large ? 'w-10 h-10' : 'w-6 h-6',
