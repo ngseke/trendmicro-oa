@@ -7,10 +7,11 @@ interface CalendarCellProps {
   active?: boolean,
   disabled?: boolean,
   large?: boolean,
+  today?: boolean,
 }
 
 export default function CalendarCell (
-  { children, onClick, active, disabled, large }: CalendarCellProps
+  { children, onClick, active, disabled, large, today }: CalendarCellProps
 ) {
   return (
     <button
@@ -18,9 +19,12 @@ export default function CalendarCell (
       onClick={onClick}
       className={clsx(
         'flex justify-center items-center rounded-full',
-        (active && !disabled) ? 'text-white bg-red-500' : '',
-        disabled ? 'text-gray-500' : '',
-        large ? 'w-10 h-10' : 'w-6 h-6'
+        large ? 'w-10 h-10' : 'w-6 h-6',
+        {
+          'text-white bg-red-500': active && !disabled,
+          'text-red-500': today && !disabled && !active,
+          'text-gray-500': disabled,
+        }
       )}
     >
       {children}
