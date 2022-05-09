@@ -57,7 +57,7 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
   }
 
   return (
-    <div className="p-1 border-[1px] border-gray-500 w-[250px]">
+    <div className="p-2 border-[1px] border-gray-500 w-[280px] shadow-md">
       <CalendarNavbar
         onClick={handleClickTitle}
         onClickPrevious={handleClickPrevious}

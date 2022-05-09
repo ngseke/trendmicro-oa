@@ -5,7 +5,7 @@ export default function App () {
   const [date, setDate] = useState(new Date())
 
   return (
-    <div className="App">
+    <div className="m-4">
       <Calendar date={date} onSelect={setDate} />
     </div>
   )
