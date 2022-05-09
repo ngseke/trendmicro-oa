@@ -52,8 +52,8 @@ export default class CalendarState {
   }
 
   get years () {
-    const startOfYears = Math.floor(this.date.get('year') / 10) * 10
-    return Array.from({ length: 10 })
+    const startOfYears = Math.floor(this.date.get('year') / 10) * 10 - 1
+    return Array.from({ length: 12 })
       .map((_, index) => index + startOfYears)
   }
 
