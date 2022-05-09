@@ -5,8 +5,8 @@ import localeData from 'dayjs/plugin/localeData'
 dayjs.extend(objectSupport)
 dayjs.extend(localeData)
 
-/** Immutable 的月曆狀態 */
-export default class CalendarState {
+/** Immutable 的日期選擇器狀態 */
+export default class DateView {
   date: Dayjs
 
   constructor (date?: ConfigType) {
@@ -15,12 +15,12 @@ export default class CalendarState {
 
   /** 設定新的年份並回傳新的 CalendarState 實體 */
   setYear (year: number) {
-    return new CalendarState(this.date.set({ year }))
+    return new DateView(this.date.set({ year }))
   }
 
   /** 設定新的月份並回傳新的 CalendarState 實體 */
   setMonth (month: number) {
-    return new CalendarState(this.date.set({ month }))
+    return new DateView(this.date.set({ month }))
   }
 
   /** 檢查傳入的參數是否與目前月曆同年份 */
@@ -70,11 +70,11 @@ export default class CalendarState {
   }
 
   get nextMonth () {
-    return new CalendarState(this.date.add(1, 'month'))
+    return new DateView(this.date.add(1, 'month'))
   }
 
   get previousMonth () {
-    return new CalendarState(this.date.add(-1, 'month'))
+    return new DateView(this.date.add(-1, 'month'))
   }
 
   static months = dayjs.monthsShort()

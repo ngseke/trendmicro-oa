@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
-import CalendarState from '../modules/CalendarState'
+import DateView from '../modules/DateView'
 import CalendarCell from './CalendarCell'
 import CalendarNavbar from './CalendarNavbar'
 
@@ -15,25 +15,25 @@ const today = dayjs()
 
 export default function Calendar ({ date, onSelect }: CalendarProps) {
   const [view, setView] = useState<View>('date')
-  const [calendar, setCalendar] = useState(new CalendarState())
+  const [dateView, setDateView] = useState(new DateView())
 
   const title = useMemo(() => {
     return {
-      date: calendar.dateViewTitle,
-      month: calendar.monthViewTitle,
-      year: calendar.yearViewTitle,
+      date: dateView.dateViewTitle,
+      month: dateView.monthViewTitle,
+      year: dateView.yearViewTitle,
     }[view]
-  }, [calendar, view])
+  }, [dateView, view])
 
   const handleClickPrevious = () => {
     if (view === 'date') {
-      setCalendar(calendar.previousMonth)
+      setDateView(dateView.previousMonth)
     }
   }
 
   const handleClickNext = () => {
     if (view === 'date') {
-      setCalendar(calendar.nextMonth)
+      setDateView(dateView.nextMonth)
     }
   }
 
@@ -55,7 +55,7 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
       <div className="flex flex-col items-stretch">
         {
           view === 'date' &&
-            calendar.matrix.map((row, key) => (
+            dateView.matrix.map((row, key) => (
               <div className="flex space-y-1" key={key}>
                 {
                   row.map((cell, key) => (
@@ -65,7 +65,7 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
                     >
                       <CalendarCell
                         onClick={() => onSelect?.(cell.toDate())}
-                        disabled={!calendar.checkIsSameMonth(cell)}
+                        disabled={!dateView.checkIsSameMonth(cell)}
                         active={cell.isSame(date, 'date')}
                         today={cell.isSame(today, 'date')}
                       >
