@@ -5,6 +5,7 @@ import MonthView from '../modules/MonthView'
 import YearView from '../modules/YearView'
 import CalendarCell from './CalendarCell'
 import CalendarNavbar from './CalendarNavbar'
+import CalendarYearMonthGrid from './CalendarYearMonthGrid'
 
 interface CalendarProps {
   date?: Date | null,
@@ -103,63 +104,51 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
 
         {
           view === 'month' &&
-            <div className="flex flex-wrap">
-              {
-                monthView.list.map((month, key) => (
-                  <div
-                    className="flex w-1/4 justify-center items-center mb-2"
-                    key={key}
-                  >
-                    <CalendarCell
-                      onClick={() => {
-                        const newDate = dayjs(date).month(month.get('month'))
-                        onSelect?.(newDate.toDate())
-                        setView('date')
-                        setDateView(
-                          dateView
-                            .setYear(newDate.year())
-                            .setMonth(newDate.month())
-                        )
-                      }}
-                      active={month.isSame(date, 'month')}
-                      today={month.isSame(today, 'month')}
-                      large
-                    >
-                      {month.format('MMM')}
-                    </CalendarCell>
-                  </div>
-                ))
-              }
-            </div>
+            <CalendarYearMonthGrid
+              list={monthView.list.map((month, key) => (
+                <CalendarCell
+                  key={key}
+                  onClick={() => {
+                    const newDate = dayjs(date).month(month.get('month'))
+                    onSelect?.(newDate.toDate())
+                    setView('date')
+                    setDateView(
+                      dateView
+                        .setYear(newDate.year())
+                        .setMonth(newDate.month())
+                    )
+                  }}
+                  active={month.isSame(date, 'month')}
+                  today={month.isSame(today, 'month')}
+                  large
+                >
+                  {month.format('MMM')}
+                </CalendarCell>
+              ))}
+            />
         }
 
         {
           view === 'year' &&
-            <div className="flex flex-wrap">
-              {
-                yearView.list.map((year, key) => (
-                  <div
-                    className="flex w-1/4 justify-center items-center mb-2"
-                    key={key}
-                  >
-                    <CalendarCell
-                      onClick={() => {
-                        const newDate = dayjs(date).year(year.get('year'))
-                        onSelect?.(newDate.toDate())
-                        setView('month')
-                        setMonthView(monthView.setYear(newDate.year()))
-                      }}
-                      active={year.isSame(date, 'year')}
-                      today={year.isSame(today, 'year')}
-                      disabled={[0, 11].includes(key)}
-                      large
-                    >
-                      {year.format('YYYY')}
-                    </CalendarCell>
-                  </div>
-                ))
-              }
-            </div>
+            <CalendarYearMonthGrid
+              list={yearView.list.map((year, key) => (
+                <CalendarCell
+                  key={key}
+                  onClick={() => {
+                    const newDate = dayjs(date).year(year.get('year'))
+                    onSelect?.(newDate.toDate())
+                    setView('month')
+                    setMonthView(monthView.setYear(newDate.year()))
+                  }}
+                  active={year.isSame(date, 'year')}
+                  today={year.isSame(today, 'year')}
+                  disabled={[0, 11].includes(key)}
+                  large
+                >
+                  {year.format('YYYY')}
+                </CalendarCell>
+              ))}
+            />
         }
       </div>
     </div>
