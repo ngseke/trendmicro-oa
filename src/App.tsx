@@ -7,6 +7,9 @@ export default function App () {
   return (
     <div className="m-4">
       <Calendar date={date} onSelect={setDate} />
+      <div className="mt-4">
+        {String(date)}
+      </div>
     </div>
   )
 }
