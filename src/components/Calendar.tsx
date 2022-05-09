@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { useMemo, useState } from 'react'
 import DateView from '../modules/DateView'
 import MonthView from '../modules/MonthView'
+import YearView from '../modules/YearView'
 import CalendarCell from './CalendarCell'
 import CalendarNavbar from './CalendarNavbar'
 
@@ -18,20 +19,23 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
   const [view, setView] = useState<View>('date')
   const [dateView, setDateView] = useState(new DateView())
   const [monthView, setMonthView] = useState(new MonthView())
+  const [yearView, setYearView] = useState(new YearView())
 
   const title = useMemo(() => {
     return {
       date: dateView.dateViewTitle,
       month: monthView.title,
-      year: dateView.yearViewTitle,
+      year: yearView.title,
     }[view]
-  }, [dateView.dateViewTitle, dateView.yearViewTitle, monthView.title, view])
+  }, [dateView.dateViewTitle, monthView.title, view, yearView.title])
 
   const handleClickPrevious = () => {
     if (view === 'date') {
       setDateView(dateView.previousMonth)
     } else if (view === 'month') {
       setMonthView(monthView.previousYear)
+    } else {
+      setYearView(yearView.previous)
     }
   }
 
@@ -40,6 +44,8 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
       setDateView(dateView.nextMonth)
     } else if (view === 'month') {
       setMonthView(monthView.nextYear)
+    } else {
+      setYearView(yearView.next)
     }
   }
 
@@ -109,6 +115,35 @@ export default function Calendar ({ date, onSelect }: CalendarProps) {
                       large
                     >
                       {month.format('MMM')}
+                    </CalendarCell>
+                  </div>
+                ))
+              }
+            </div>
+        }
+
+        {
+          view === 'year' &&
+            <div className="flex flex-wrap">
+              {
+                yearView.list.map((year, key) => (
+                  <div
+                    className="flex w-1/4 justify-center items-center mb-2"
+                    key={key}
+                  >
+                    <CalendarCell
+                      onClick={() => {
+                        const newDate = dayjs(date).year(year.get('year'))
+                        onSelect?.(newDate.toDate())
+                        setView('month')
+                        setMonthView(monthView.setYear(newDate.year()))
+                      }}
+                      active={year.isSame(date, 'year')}
+                      today={year.isSame(today, 'year')}
+                      disabled={[0, 11].includes(key)}
+                      large
+                    >
+                      {year.format('YYYY')}
                     </CalendarCell>
                   </div>
                 ))
