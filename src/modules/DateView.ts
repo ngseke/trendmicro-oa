@@ -27,16 +27,18 @@ export default class DateView {
   }
 
   get matrix () {
-    const matrix: Dayjs[][] = Array.from({ length: 6 })
-      .map(() => Array.from({ length: 7 }))
+    const rowCount = 6
+    const dayCount = 7
+    const matrix: Dayjs[][] = Array.from({ length: rowCount })
+      .map(() => Array.from({ length: dayCount }))
 
     /** 本月第一天的星期 */
     const firstDayOfWeek = this.date.day()
 
-    for (let week = 0; week < 6; week++) {
-      for (let day = 0; day < 7; day++) {
+    for (let week = 0; week < rowCount; week++) {
+      for (let day = 0; day < dayCount; day++) {
         matrix[week][day] = this.date.add(
-          week * 7 + day - firstDayOfWeek,
+          week * dayCount + day - firstDayOfWeek,
           'd'
         )
       }
